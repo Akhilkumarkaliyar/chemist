@@ -1,0 +1,39 @@
+<!-- Fabs (Floating Action Buttons) in cards start -->
+<section id="fabs-examples">
+    <div class="row text-left">
+        <div class="col-12 mt-3 mb-1">
+            <div class="content-header">Products</div>
+            <!--<p class="content-sub-header">Cards require a small amount of markup and classes to provide you with as much control as possible. These classes
+                and markup are flexible though and can typically be remixed and extended with ease. For example, if your
+                card has no flush content like images, feel free to put the <code>.card-block</code> class on the <code>.card</code>                element to consolidate your markup.</p>-->
+        </div>
+    </div>
+
+    <div class="row text-left" matchHeight ="card">
+        <div class="col-lg-4 col-md-12 col-sm-12" *ngFor="let product of productdata">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-img">
+                        <img class="card-img-top img-fluid" src="{{product.img_path}}" alt="Card image cap">
+                        <!--<img class="card-img-top img-fluid" src="/assets/img/photos/14.jpg" alt="Card image capsss">-->
+                        <h4 class="card-title">{{product.name}}</h4>
+                        <a class="btn btn-floating halfway-fab bg-warning"><i class="ft-plus"></i></a>
+                    </div>
+                    <div class="card-block">
+                        <p class="card-text">{{product.company_name}}</p>
+                        <p class="card-text">{{product.chemical_name}}</p>
+                     </div>
+                    <div class="card-block row">
+                        <div class="col-6 text-left">
+                            <p class="btn btn-raised btn-danger">MRP : $ {{product.mrp}}</p>
+                        </div>
+                        <div class="col-6 text-right">
+                            <p class="btn btn-raised btn-danger">Selling : $ {{product.selling_price}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- // Fabs section end -->

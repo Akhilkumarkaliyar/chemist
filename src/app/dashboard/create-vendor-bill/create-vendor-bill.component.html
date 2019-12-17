@@ -1,0 +1,101 @@
+<!-- Basic form layout section start -->
+<section id="basic-form-layouts">
+    <div class="row text-left">
+        <div class="col-sm-12">
+            <div class="content-header">Vendor Bill Form</div>
+        </div>
+    </div>
+    <div class="row text-left">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="px-3">
+                        <form [formGroup]="VendorbillForm"  novalidate>
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-user"></i> Vendor Bill Info</h4>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Vendor Name <em class="error">*</em></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <select id="projectinput5" formControlName="vendor_id" class="form-control">
+                                                    <option value="" selected="" disabled="">Vendor Name</option>
+                                                    <option *ngFor="let vendor of vendordata"  value="{{vendor.id}}">{{ vendor.name}}</option>
+                                                </select>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="VendorbillForm.get('vendor_id').errors && (VendorbillForm.get('vendor_id').touched || VendorbillForm.get('vendor_id').dirty)">
+                                                    <span *ngIf="VendorbillForm.get('vendor_id').errors.required">Vendor Name required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Bill No <em class="error">*</em></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Enter Bill No" class="form-control" formControlName="bill_no" required>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="VendorbillForm.get('bill_no').errors && (VendorbillForm.get('bill_no').touched || VendorbillForm.get('bill_no').dirty)">
+                                                    <span *ngIf="VendorbillForm.get('bill_no').errors.required">Bill no is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Bill Date <em class="error">*</em></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="date" class="form-control" value="{{billdate | date : 'yyyy-MM-dd'}}" id="bill_date" >
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="VendorbillForm.get('bill_date').errors && (VendorbillForm.get('bill_date').touched || VendorbillForm.get('bill_date').dirty)">
+                                                    <span *ngIf="VendorbillForm.get('bill_date').errors.required">Bill date is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Bill Amount <em class="error">*</em></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Enter Bill Amount" class="form-control" formControlName="amount" required>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="VendorbillForm.get('amount').errors && (VendorbillForm.get('amount').touched || VendorbillForm.get('amount').dirty)">
+                                                    <span *ngIf="VendorbillForm.get('amount').errors.required">Bill amount is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions center">
+                                <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Gotolist()">
+                                    <i class="ft-x"></i> Cancel
+                                </button>
+                                <button *ngIf="showbutton" type="submit" class="btn btn-raised btn-raised btn-primary" (click)="editvendorbill()"> <i class="fa fa-check-square-o"></i>Submit</button>
+                                <button *ngIf="!showbutton" type="submit"  class="btn btn-raised btn-raised btn-primary" (click)="createvendorbill()"> <i class="fa fa-check-square-o"></i>Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

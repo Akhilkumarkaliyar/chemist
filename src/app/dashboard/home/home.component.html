@@ -1,0 +1,91 @@
+<!-- Fabs (Floating Action Buttons) in cards start -->
+<section id="fabs-examples">
+        <div class="row text-left">
+            <div class="col-12 mt-3 mb-1">
+                <div class="content-header">Coming Products</div>
+                <!--<p class="content-sub-header">Cards require a small amount of markup and classes to provide you with as much control as possible. These classes
+                    and markup are flexible though and can typically be remixed and extended with ease. For example, if your
+                    card has no flush content like images, feel free to put the <code>.card-block</code> class on the <code>.card</code>                element to consolidate your markup.</p>-->
+            </div>
+        </div>
+    
+        <div class="row text-left" matchHeight ="card">
+            <div class="col-lg-4 col-md-12 col-sm-12" *ngFor="let coming of Comingproductdata; index as i">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-img">
+                            <img class="card-img-top img-fluid" src="assets/img/photos/14.jpg" alt="Card image cap">
+                            <h4 class="card-title">Card title</h4>
+                            <!--<a class="btn btn-floating halfway-fab bg-warning"><i class="ft-plus"></i></a>-->
+                        </div>
+                        <div class="card-block">
+                            <p class="card-text">{{coming.name}}</p>
+                            <p class="card-text">{{coming.chemical_name}}</p>
+                            <a class="btn btn-raised btn-warning">{{coming.mrp}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- // Fabs section end -->
+    
+    <!-- Horizontal cards start -->
+    <section id="horizontal-examples">
+        <div class="row text-left">
+            <div class="col-12 mt-3 mb-1">
+                <div class="content-header">Mostly Sold Product</div>
+                <!--<p class="content-sub-header">Cards with horizontal image.</p>-->
+            </div>
+        </div>
+    
+        <div class="row text-left" matchHeight ="card">
+            <div class="col-xl-6 col-lg-12" *ngFor="let sold of Soldproductdata; index as i">
+                <div class="card horizontal">
+                    <div class="card-body">
+                        <div class="card-stacked align-self-center">
+                            <div class="px-3">
+                                <h4 class="card-title">{{sold.name}}</h4>
+                                <p class="card-text">{{sold.chemical_name}}</p>
+                                <a class="btn btn-raised btn-danger">{{sold.selling_price}}</a>
+                            </div>
+                        </div>
+                        <div class="card-img">
+                            <img class="card-img-top img-fluid" src="assets/img/photos/06.jpg" alt="Card image cap">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- // Horizontal cards end -->
+    
+    
+    <!-- Overlap Image Cards start -->
+    <section id="overlap-image-examples">
+        <div class="row text-left">
+            <div class="col-12 mt-3 mb-3">
+                <div class="content-header">Available Product</div>
+                <!--<p class="content-sub-header">Overlap Image Cards</p>-->
+            </div>
+        </div>
+    
+        <div class="row text-left" matchHeight ="card">
+            <div class="col-lg-4 col-md-4 col-sm-12" *ngFor="let available of Availableproductdata; index as i">
+                <div class="card card-inverse bg-primary text-center">
+                    <div class="card-body">
+                        <div class="card-img overlap">
+                            <img src="assets/img/elements/11.png" alt="element 06" width="190" class="mb-1">
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">{{available.name}}</h4>
+                            <p class="card-text">{{available.company_name}}</p>
+                            <p class="card-text">{{available.company_name}}</p>
+                            <p class="card-text">{{available.company_name}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- // Overlap Image Cards end -->
