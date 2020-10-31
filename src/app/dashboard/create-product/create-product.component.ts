@@ -54,24 +54,25 @@ export class CreateProductComponent implements OnInit{
             console.log(this.id);
             this.ProductForm = new FormGroup({
                 cat_id: new FormControl("", [Validators.required]),
-                subcat_id: new FormControl("", [Validators.required]),
+                //subcat_id: new FormControl("", [Validators.required]),
                 name: new FormControl("", [Validators.required]),
-                chemical_name: new FormControl("", []),
+                chemical_name: new FormControl(""),
                 mrp: new FormControl("", [Validators.required]),
-                selling_price: new FormControl("", [Validators.required]),
+                //selling_price: new FormControl("", [Validators.required]),
                 //available_price: new FormControl("", [Validators.required]),
-                hsn_code: new FormControl("", [Validators.required]),
-                //gst: new FormControl("", [Validators.required]),
-                company_name: new FormControl("", [Validators.required]),
+                hsn_code: new FormControl(""),
+                gst: new FormControl("", [Validators.required]),
+                company_name: new FormControl(""),
                 quantity: new FormControl("", [Validators.required]),
+                loose: new FormControl(""),
                 perquantity: new FormControl(""),
-                rack_no: new FormControl("", [Validators.required]),
-                batch_no: new FormControl("", [Validators.required]),
+                rack_no: new FormControl(""),
+                batch_no: new FormControl(""),
                 is_prescription: new FormControl("", [Validators.required]),
                 expire_date: new FormControl(""),
-                barcode: new FormControl("", [Validators.required]),
+                barcode: new FormControl(""),
                 //available_date: new FormControl("", [Validators.required]),
-                image: new FormControl("", []),
+                //image: new FormControl("", []),
             });
         }
        
@@ -137,24 +138,25 @@ export class CreateProductComponent implements OnInit{
                       //this.exdate = this.d.getFullYear() + "-" + (this.d.getMonth()+1) + "-" + (this.d.getDate()-1);
                       this.ProductForm = new FormGroup({
                         cat_id: new FormControl(data.data[0].cat_id, [Validators.required]),
-                        subcat_id: new FormControl(data.data[0].subcat_id, [Validators.required]),
+                        //subcat_id: new FormControl(data.data[0].subcat_id, [Validators.required]),
                         name: new FormControl(data.data[0].name, [Validators.required]),
                         chemical_name: new FormControl(data.data[0].chemical_name, []),
                         mrp: new FormControl(data.data[0].mrp, [Validators.required]),
-                        selling_price: new FormControl(data.data[0].selling_price, [Validators.required]),
+                        //selling_price: new FormControl(data.data[0].selling_price, [Validators.required]),
                         //available_price: new FormControl(data.data[0].available_price, [Validators.required]),
-                        hsn_code: new FormControl(data.data[0].hsn_code, [Validators.required]),
-                        //gst: new FormControl(data.data[0].gst, [Validators.required]),
-                        company_name: new FormControl(data.data[0].company_name, [Validators.required]),
+                        hsn_code: new FormControl(data.data[0].hsn_code, []),
+                        gst: new FormControl(data.data[0].gst, [Validators.required]),
+                        company_name: new FormControl(data.data[0].company_name),
                         quantity: new FormControl(data.data[0].quantity, [Validators.required]),
+                        loose: new FormControl(data.data[0].loose),
                         perquantity: new FormControl(data.data[0].perquantity),
-                        rack_no: new FormControl(data.data[0].rack_no, [Validators.required]),
-                        batch_no: new FormControl(data.data[0].batch_no, [Validators.required]),
+                        rack_no: new FormControl(data.data[0].rack_no, []),
+                        batch_no: new FormControl(data.data[0].batch_no),
                         is_prescription: new FormControl(data.data[0].is_prescription, [Validators.required]),
                         expire_date: new FormControl(data.data[0].expire_date),
                         barcode :new FormControl(data.data[0].barcode),
                         //available_date: new FormControl(data.data[0].available_date, [Validators.required]),
-                        image: new FormControl(data.data[0].image, []),
+                        //image: new FormControl(data.data[0].image, []),
                       });
                       console.log(this.ProductForm);
                       
@@ -166,6 +168,7 @@ export class CreateProductComponent implements OnInit{
     }
     xyz(){
         console.log('ccc');
+        this.barcodeValue ='aaaa';
         setTimeout(function() {
             $('#upfile').trigger('click');
           }, 10000);
@@ -174,13 +177,15 @@ export class CreateProductComponent implements OnInit{
         //$('#barcode').trigger('stop');
     }
     filechange(e){
-        console.log('dd');
+        //console.log('dd');
         this.file = e.target.files[0];
-        console.log(this.file);
+        //console.log(this.file);
         this.fileName = e.target.files[0];
         this.name = e.target.files[0].name;
     }
     createproduct(image){
+        console.log(image);
+        console.log(this.ProductForm);
         if(this.ProductForm.invalid){
             this.toasterservice.Error("Please enter the required filed");
             return;
@@ -189,8 +194,8 @@ export class CreateProductComponent implements OnInit{
             //console.log(this.ProductForm);
             this.loaderservice.display(true);
             this.expiredate=document.getElementById("expiredate");
-            this.gstvalue=document.getElementById("gst");
-            this.appservice.addproduct( this.ProductForm.value,this.fileName,this.loguser,this.expiredate.value,this.gstvalue.value)
+            //this.gstvalue=document.getElementById("gst");
+            this.appservice.addproduct( this.ProductForm.value,this.fileName,this.loguser,this.expiredate.value)
             .subscribe(
             data=>{
                 console.log(data);
@@ -217,8 +222,8 @@ export class CreateProductComponent implements OnInit{
         if(this.ProductForm.valid){
             this.loaderservice.display(true);
             this.expiredate=document.getElementById("expiredate");
-            this.gstvalue=document.getElementById("gst");
-            this.appservice.editproduct(this.ProductForm.value,this.id,this.fileName,this.loguser,this.expiredate.value, this.gstvalue.value)
+            //this.gstvalue=document.getElementById("gst");
+            this.appservice.editproduct(this.ProductForm.value,this.id,this.fileName,this.loguser,this.expiredate.value)
             .subscribe(
                 data=>{
                     console.log(data);

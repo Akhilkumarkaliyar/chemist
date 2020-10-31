@@ -39,7 +39,7 @@ export class BillingComponent implements OnInit {
             );
     }
     deletebillingdata(id){
-        this.appservice.deletebilling(id)
+        this.appservice.deletebilling(id,this.loguser,this.id)
             .subscribe(
                 data => {
                     console.log(data);

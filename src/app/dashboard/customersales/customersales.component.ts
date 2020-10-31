@@ -86,7 +86,7 @@ export class CustomersalesComponent implements OnInit {
         this.pno=en-1;
         this.startDateValue=document.getElementById("startdate");
         this.endDateValue=document.getElementById("enddate");
-        this.appservice.getcustomerreport(this.pno,10,this.id)
+        this.appservice.getcustomerreport(this.pno,10,this.loguser)
         .subscribe(
             data => {
                 if(data.status=='1'){
@@ -125,6 +125,6 @@ export class CustomersalesComponent implements OnInit {
         );
     }
     goToviewdetail(id){
-        this.router.navigate(['/customerdetail', id]);
+        this.router.navigate(['/dupviewinvoice', id]);
     }  
 }

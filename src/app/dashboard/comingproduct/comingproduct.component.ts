@@ -25,6 +25,7 @@ export class ComingproductComponent implements OnInit {
     totalrecord:any;
     totalRecords: any;
     initialPageValue = 1;
+    sortby:any;
     constructor(private excelService:ExcelService,private appservice: AppService,private router: Router, private route: ActivatedRoute, private toasterservice: ToasterService, private loaderservice: LoaderService, private cookieservice: CookieService ){}
     ngOnInit() {
         if(!this.cookieservice.get("loginuserMerck")){
@@ -38,7 +39,8 @@ export class ComingproductComponent implements OnInit {
         });
     }
     getstockproductdata() {
-        this.appservice.stockproductdata(this.loguser,0,10)
+        this.sortby=document.getElementById("getsortpage");
+        this.appservice.stockproductdata(this.loguser,0,10,this.sortby.value)
         .subscribe(
             data => {
                 if(data.status=='1'){
@@ -79,5 +81,43 @@ export class ComingproductComponent implements OnInit {
         console.log("excel download");
         this.excelService.exportAsExcelFile(this.comingproductdata, 'sample');
      }
+     getrecord(){
 
+        this.totalrecord=document.getElementById("getpage");
+        this.sortby=document.getElementById("getsortpage");
+        this.appservice.stockproductdata(this.loguser,this.startpagevalue,this.totalrecord.value,this.sortby.value)
+        .subscribe(
+            data => {
+                if(data.status=='1'){
+                    this.comingproductdata = data.data;
+                    if(this.totalrecord.value == 10){
+                        this.totalRecords = data.record;
+                    }else{
+                        this.totalRecords = '';
+                    }
+                    this.itemsPerPage =10;
+                    this.currentPage =this.initialPageValue;
+                }
+            }
+        );
+    }
+    getsortrecord(){
+        this.totalrecord=document.getElementById("getpage");
+        this.sortby=document.getElementById("getsortpage");
+        this.appservice.stockproductdata(this.loguser,this.startpagevalue,this.totalrecord.value,this.sortby.value)
+        .subscribe(
+            data => {
+                if(data.status=='1'){
+                    this.comingproductdata = data.data;
+                    if(this.totalrecord.value == 10){
+                        this.totalRecords = data.record;
+                    }else{
+                        this.totalRecords = '';
+                    }
+                    this.itemsPerPage =10;
+                    this.currentPage =this.initialPageValue;
+                }
+            }
+        );
+    }
 }

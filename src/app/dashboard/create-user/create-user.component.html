@@ -2,7 +2,7 @@
 <section id="basic-form-layouts">
     <div class="row text-left">
         <div class="col-sm-12">
-            <div class="content-header">Application User Form</div>
+            <div class="content-header">Chemist Form</div>
         </div>
     </div>
     <div class="row text-left">
@@ -12,131 +12,156 @@
                     <div class="px-3">
                         <form [formGroup]="UserForm"  novalidate>
                             <div class="form-body">
-                                <h4 class="form-section"><i class="ft-user"></i> Personal Info</h4>
+                                <h4 class="form-section"><i class="ft-user"></i>Chemist Info</h4>
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="projectinput1">First Name</label>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist Name</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text"  placeholder="Enter first name"
+                                                    class="form-control" formControlName="name" required>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="UserForm.get('name').errors && (UserForm.get('name').touched || UserForm.get('name').dirty)">
+                                                    <span *ngIf="UserForm.get('name').errors.required">Name is required</span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input type="text"  placeholder="Enter first name"
-                                                class="form-control" formControlName="fname" required fname>
-                                            <span class="form-text text-muted danger"
-                                                *ngIf="UserForm.get('fname').errors && (UserForm.get('fname').touched || UserForm.get('fname').dirty)">
-                                                <span *ngIf="UserForm.get('fname').errors.required">First name is required</span>
-                                            </span>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist Email</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text"  placeholder="Enter email"
+                                                    class="form-control" formControlName="email" required email>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="UserForm.get('email').errors && (UserForm.get('email').touched || UserForm.get('email').dirty)">
+                                                    <span *ngIf="UserForm.get('email').errors.required">Email is required</span>
+                                                    <span *ngIf="UserForm.get('email').errors.email">Invalid Email ID</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist Contact No </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text"  placeholder="Enter contact"
+                                                    class="form-control" formControlName="mobile" required mobile>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="UserForm.get('mobile').errors && (UserForm.get('mobile').touched || UserForm.get('mobile').dirty)">
+                                                    <span *ngIf="UserForm.get('mobile').errors.required">Mobile Number is required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist licenceno</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text"  placeholder="Enter licenceno"
+                                                    class="form-control" formControlName="licenceno" required >
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="UserForm.get('licenceno').errors && (UserForm.get('licenceno').touched || UserForm.get('licenceno').dirty)">
+                                                    <span *ngIf="UserForm.get('licenceno').errors.required">licenceno is required</span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="projectinput1">Last Name</label>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist Address</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text"  placeholder="Enter Address"
+                                                    class="form-control" formControlName="address" required >
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="UserForm.get('address').errors && (UserForm.get('address').touched || UserForm.get('address').dirty)">
+                                                    <span *ngIf="UserForm.get('address').errors.required">Address is required</span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Enter last name"
-                                                class="form-control" formControlName="lname" required lname>
-                                            <span class="form-text text-muted danger"
-                                                *ngIf="UserForm.get('lname').errors && (UserForm.get('lname').touched || UserForm.get('lname').dirty)">
-                                                <span *ngIf="UserForm.get('lname').errors.required">Last name is required</span>
-                                            </span>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist Country</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <!--<div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="projectinput1">Country</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <select id="projectinput5" formControlName="country"  class="form-control">
-                                                <option value="" selected="" disabled="">country</option>
-                                                <option *ngFor="let country of countrydata" value="{{country.id}}">{{ country.country_enName+ ' ' +  country.country_arName }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>-->
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="projectinput1">Country</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Enter Country"
-                                                class="form-control" formControlName="country" required country>
-                                            <span class="form-text text-muted danger"
-                                                *ngIf="UserForm.get('country').errors && (UserForm.get('country').touched || UserForm.get('country').dirty)">
-                                                <span *ngIf="UserForm.get('country').errors.required">Country name is required</span>
-                                            </span>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text"  placeholder="Enter Country"
+                                                    class="form-control" formControlName="country" required >
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="UserForm.get('country').errors && (UserForm.get('country').touched || UserForm.get('country').dirty)">
+                                                    <span *ngIf="UserForm.get('country').errors.required">Country is required</span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="projectinput1">City</label>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist City</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text"  placeholder="Enter City"
+                                                    class="form-control" formControlName="city" required >
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="UserForm.get('city').errors && (UserForm.get('city').touched || UserForm.get('city').dirty)">
+                                                    <span *ngIf="UserForm.get('city').errors.required">city is required</span>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Enter city"
-                                                class="form-control" formControlName="city" required city>
-                                            <span class="form-text text-muted danger"
-                                                *ngIf="UserForm.get('city').errors && (UserForm.get('city').touched || UserForm.get('city').dirty)">
-                                                <span *ngIf="UserForm.get('city').errors.required">city name is required</span>
-                                            </span>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="projectinput1">Email</label>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Chemist Logo</label>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input type="text"  placeholder="Enter email"
-                                                class="form-control" formControlName="email" required email>
-                                            <span class="form-text text-muted danger"
-                                                *ngIf="UserForm.get('email').errors && (UserForm.get('email').touched || UserForm.get('email').dirty)">
-                                                <span *ngIf="UserForm.get('email').errors.required">Email is required</span>
-                                                <span *ngIf="UserForm.get('email').errors.email">Invalid Email ID</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="projectinput1">Contact</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <input type="text"  placeholder="Enter contact"
-                                                class="form-control" formControlName="mobile" required mobile>
-                                            <span class="form-text text-muted danger"
-                                                *ngIf="UserForm.get('mobile').errors && (UserForm.get('mobile').touched || UserForm.get('mobile').dirty)">
-                                                <span *ngIf="UserForm.get('mobile').errors.required">Mobile Number is required</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="file" style="display:none" (change)="filechange($event)" #fileinput  class="form-control-file">
+                                                <button class="btn btn-raised btn-primary mr-2" (click)="fileinput.click()">select Image</button>
+                                                <span>{{name}}</span>
+                                                <span></span>
+                                                <span>{{descen}}</span>
+                                                <!--<span><img height="100px" width="100px" src="baseurl/{{descen}}" /></span>-->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

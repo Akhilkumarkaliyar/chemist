@@ -28,7 +28,9 @@ my-app .main-panel .main-content .card{
         position: absolute;
     }
 }
-
+@media print{
+    .doNotPrint{display:none !important;}
+  }
 #map{
     position:relative;
     width:100%;

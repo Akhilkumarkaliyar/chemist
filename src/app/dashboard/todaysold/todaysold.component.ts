@@ -38,6 +38,8 @@ export class TodaySoldComponent implements OnInit {
         this.today =this.d.getFullYear() + "-" + (this.d.getMonth()+1) + "-" + this.d.getDate();
         this.endValue = this.d.getFullYear() + "-" + (this.d.getMonth()+1) + "-" + (this.d.getDate()-1);
         this.startValue =this.d.getFullYear() + "-" + (this.d.getMonth()+1) + "-" + (this.d.getDate()-2);
+        //console.log(this.endValue);
+        //console.log(this.startValue);
         if(!this.cookieservice.get("loginuserMerck")){
             this.router.navigate(['/auth']);
         }

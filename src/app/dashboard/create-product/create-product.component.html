@@ -22,11 +22,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input type="text" (keyup)="xyz()" id="barcode" placeholder="Enter Barcode" autofocus class="form-control" formControlName="barcode">
-                                                <span class="form-text text-muted danger"
+                                                <input type="text" (click)="xyz()" id="barcode" placeholder="Enter Barcode" autofocus value={{barcodeValue}} class="form-control" formControlName="barcode">
+                                               <!--<span class="form-text text-muted danger"
                                                     *ngIf="ProductForm.get('barcode').errors && (ProductForm.get('barcode').touched || ProductForm.get('barcode').dirty)">
                                                     <span *ngIf="ProductForm.get('barcode').errors.required">Barcode is required</span>
-                                                </span>
+                                                </span>-->
                                             </div>
                                         </div>
                                     </div>
@@ -51,14 +51,14 @@
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="projectinput1">Category <em class="error">*</em></label>
+                                                <label for="projectinput1">Type <em class="error">*</em></label>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <select id="projectinput5" formControlName="cat_id"  (change)="getsubcategory($event.target.value)" class="form-control">
-                                                    <option value="" selected="" disabled="">Category</option>
-                                                    <option *ngFor="let category of categorydata"  value="{{category.id}}">{{ category.name}}</option>
+                                                <select id="projectinput5" formControlName="cat_id"  (changess)="getsubcategory($event.target.value)" class="form-control">
+                                                    <option value="" selected="" disabled="">Select Type</option>
+                                                    <option *ngFor="let category of categorydata"  value="{{category.name}}">{{ category.name}}</option>
                                                 </select>
                                                 <span class="form-text text-muted danger"
                                                     *ngIf="ProductForm.get('cat_id').errors && (ProductForm.get('cat_id').touched || ProductForm.get('cat_id').dirty)">
@@ -68,6 +68,26 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                    <label class="display-block">Is prescription </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <select id="projectinput5" formControlName="is_prescription"  class="form-control">
+                                                    <option value="" selected="" disabled="" >Prescription</option>
+                                                    <option value="1" >Required</option>
+                                                    <option value="2" >Not Required</option>
+                                                </select>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="ProductForm.get('is_prescription').errors && (ProductForm.get('is_prescription').touched || ProductForm.get('is_prescription').dirty)">
+                                                    <span *ngIf="ProductForm.get('is_prescription').errors.required">Prescription required</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="projectinput1">SubCategory <em class="error">*</em></label>
@@ -85,9 +105,25 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
                                 </div>
                                 <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Company Name </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Enter company name" class="form-control" formControlName="company_name" >
+                                                <!--<span class="form-text text-muted danger"
+                                                    *ngIf="ProductForm.get('company_name').errors && (ProductForm.get('company_name').touched || ProductForm.get('company_name').dirty)">
+                                                    <span *ngIf="ProductForm.get('company_name').errors.required">Company name is required</span>
+                                                </span>-->
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -104,7 +140,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!--<div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="projectinput1">Selling Price <em class="error">*</em></label>
@@ -119,7 +155,8 @@
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>-->
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -141,7 +178,7 @@
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="projectinput1">Expire Date <em class="error">*</em></label>
+                                                <label for="projectinput1">Expire Date</label>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
@@ -159,23 +196,7 @@
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="projectinput1">Company Name <em class="error">*</em></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <div class="form-group">
-                                                <input type="text" placeholder="Enter company name" class="form-control" formControlName="company_name" required company_name>
-                                                <span class="form-text text-muted danger"
-                                                    *ngIf="ProductForm.get('company_name').errors && (ProductForm.get('company_name').touched || ProductForm.get('company_name').dirty)">
-                                                    <span *ngIf="ProductForm.get('company_name').errors.required">Company name is required</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="projectinput1">Quantity <em class="error">*</em></label>
+                                                <label for="projectinput1">Pack <em class="error">*</em></label>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
@@ -188,33 +209,59 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Loose </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Enter Loose Quantity" class="form-control" formControlName="loose" >
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="projectinput1">Rack No <em class="error">*</em></label>
+                                                <label for="projectinput1">Piece per Pack</label>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input type="text" placeholder="Enter Rack no" class="form-control" formControlName="rack_no" required >
-                                                <span class="form-text text-muted danger"
-                                                    *ngIf="ProductForm.get('rack_no').errors && (ProductForm.get('rack_no').touched || ProductForm.get('rack_no').dirty)">
-                                                    <span *ngIf="ProductForm.get('rack_no').errors.required">Rack No is required</span>
-                                                </span>
+                                                <input type="text" placeholder="Enter total no of piece" class="form-control" formControlName="perquantity">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="projectinput1">Batch No <em class="error">*</em></label>
+                                                <label for="projectinput1">Rack No </label>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input type="text" placeholder="Enter Batch no" class="form-control" formControlName="batch_no" required batch_no>
+                                                <input type="text" placeholder="Enter Rack no" class="form-control" formControlName="rack_no" >
+                                                <!--<span class="form-text text-muted danger"
+                                                    *ngIf="ProductForm.get('rack_no').errors && (ProductForm.get('rack_no').touched || ProductForm.get('rack_no').dirty)">
+                                                    <span *ngIf="ProductForm.get('rack_no').errors.required">Rack No is required</span>
+                                                </span>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Batch No</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <input type="text" placeholder="Enter Batch no" class="form-control" formControlName="batch_no">
                                                 <span class="form-text text-muted danger"
                                                     *ngIf="ProductForm.get('batch_no').errors && (ProductForm.get('batch_no').touched || ProductForm.get('batch_no').dirty)">
                                                     <span *ngIf="ProductForm.get('batch_no').errors.required">Batch No is required</span>
@@ -222,29 +269,22 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                    <label class="display-block">Is prescription </label>
+                                                <label for="projectinput1">Hsn Code</label>
                                             </div>
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <select id="projectinput5" formControlName="is_prescription"  class="form-control">
-                                                    <option value="" selected="" disabled="" >Prescription</option>
-                                                    <option value="1" >Required</option>
-                                                    <option value="2" >Not Required</option>
-                                                </select>
-                                                <span class="form-text text-muted danger"
-                                                    *ngIf="ProductForm.get('is_prescription').errors && (ProductForm.get('is_prescription').touched || ProductForm.get('is_prescription').dirty)">
-                                                    <span *ngIf="ProductForm.get('is_prescription').errors.required">Prescription required</span>
-                                                </span>
+                                                <input type="text" placeholder="Enter Hsn Code" class="form-control" formControlName="hsn_code" hsn_code>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                </div>
+                                <div class="row">
+                                    
+                                    <!--<div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="projectinput1">Product Image</label>
@@ -257,12 +297,35 @@
                                                 <span>{{name}}</span>
                                                 <span></span>
                                                 <span>{{descen}}</span>
-                                                <!--<span><img height="100px" width="100px" src="baseurl/{{descen}}" /></span>-->
+                                                <span><img height="100px" width="100px" src="baseurl/{{descen}}" /></span>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    
+                                    <div class="col-md-6">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="projectinput1">Gst % <em class="error">*</em></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <!--<input type="text" class="form-control" placeholder="Enter Gst" id="gst" value="{{gst}}">-->
+                                                <select id="" formControlName="gst"  class="form-control">
+                                                    <option value="" selected="" disabled="" >Gst</option>
+                                                    <option value="5" >5</option>
+                                                    <option value="12" >12</option>
+                                                    <option value="18" >18</option>
+                                                </select>
+                                                <span class="form-text text-muted danger"
+                                                    *ngIf="ProductForm.get('gst').errors && (ProductForm.get('gst').touched || ProductForm.get('gst').dirty)">
+                                                    <span *ngIf="ProductForm.get('gst').errors.required">Gst required</span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <!--<div class="row">
                                     <div class="col-md-6">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -290,10 +353,14 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="form-group">
-                                                <input type="text" placeholder="Enter Gst" id="gst" value="{{gst}}">
+                                                <input type="text" class="form-control" placeholder="Enter Gst" id="gst" value="{{gst}}">
                                             </div>
                                         </div>
                                     </div>
+                                </div>-->
+                                <div class="row">
+                                    
+                                    
                                 </div>
                                 <div class="row">
                                     <!--<div class="col-md-6">
@@ -329,24 +396,6 @@
                                         </div>
                                     </div>-->
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for="projectinput1">Piece per quantity</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Enter total no of piece" class="form-control" formControlName="perquantity">
-                                        </div>
-                                    </div>
-                                </div>
-                               <!-- <barcode-scanner-livestream type="code_128" (valueChanges)="onValueChanges($event)"></barcode-scanner-livestream>
-                                <div [hidden]="!barcodeValue">
-                                    {{barcodeValue}}
-                                </div>-->
                             </div>
                             <div class="form-actions center">
                                 <button type="button" class="btn btn-raised btn-raised btn-warning mr-1" (click)="Gotolist()">

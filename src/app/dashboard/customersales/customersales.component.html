@@ -50,7 +50,7 @@
                                     <th>Sr.No.</th>
                                     <th>Invoice No</th>
                                     <th>Customer Name</th>
-                                    <th>Email</th>
+                                    <th>Invoice date</th>
                                     <th>Mobile</th>
                                     <th>Address</th>
                                     <th>Total Purchase</th>
@@ -60,18 +60,18 @@
                             <tbody>
                                 <tr *ngFor="let product of TodaySolddata; index as i">
                                     <td>{{itemsPerPage *(currentPage-1)+i+1}}</td>
-                                    <td>000{{product.id}}</td>
+                                    <td>{{product.invoiceno}}</td>
                                     <td>
                                         <a class="success p-0" download data-original-title="" title="" (click)="goToviewdetail(product.id)">
                                             {{product.name}}
                                         </a>
                                     </td>
-                                    <td>{{product.email}}</td>
+                                    <td>{{product.invoicedate  | date: 'dd-MM-yyyy'}}</td>
                                     <td>{{product.mobile}}</td>
                                     <td>{{product.address}}</td>
                                     <td>{{product.totalpur}}</td>
                                     <td>
-                                        <a class="success p-0" download data-original-title="" title="" (click)="goToviewdetail(product.id)">
+                                        <a class="success p-0" download data-original-title="" title="" (click)="goToviewdetail(product.bill_no)">
                                             Detail
                                         </a>
                                     </td>

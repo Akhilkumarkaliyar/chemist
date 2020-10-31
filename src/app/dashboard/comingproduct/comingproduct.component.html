@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <div class="card-block">
                         <div class="row akhil">
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <form [formGroup]="ProductSearch"  novalidate>
                                     <div class="input-group">
                                         <div class="col-lg-12">
@@ -21,15 +21,24 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
                                 <div class="input-group">
                                     <select id="projectinput5" class="form-control" id="getpage" (change)="getrecord()">
                                         <option value="10"  selected>10</option>
-                                        <option value="1000">All</option>
+                                        <option value="10000">All</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-3">
+                                <div class="input-group">
+                                    <select id="projectinput5" class="form-control" id="getsortpage" (change)="getsortrecord()">
+                                        <option value="name"  selected>Name</option>
+                                        <option value="expire_date">Expire date</option>
+                                        <option value="cat_id">Type</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <a class="btn btn-raised mr-1 btn-primary" (click)="exportAsXLSX()">Download List</a>
@@ -48,8 +57,8 @@
                             <thead>
                                 <tr>
                                     <th>Sr.No.</th>
-                                    <th>Category Name</th>
-                                    <th>SubCategory Name</th>
+                                    <th>Type</th>
+                                    <!--<th>SubCategory Name</th>-->
                                     <th>Product Name</th>
                                     <th>Chemical Name</th>
                                     <th>Selling Price</th>
@@ -64,7 +73,7 @@
                                 <tr *ngFor="let product of comingproductdata; index as i">
                                     <td [ngClass]="{'maincolor':product.quantity > 0 }">{{itemsPerPage *(currentPage-1)+i+1}}</td>
                                     <td [ngClass]="{'maincolor':product.quantity > 0 }">{{product.cname}}</td>
-                                    <td [ngClass]="{'maincolor':product.quantity > 0 }">{{product.scname}}</td>
+                                    <!--<td [ngClass]="{'maincolor':product.quantity > 0 }">{{product.scname}}</td>-->
                                     <td [ngClass]="{'maincolor':product.quantity > 0 }">{{product.name}}</td>
                                     <td [ngClass]="{'maincolor':product.quantity > 0 }">{{product.chemical_name}}</td>
                                     <td [ngClass]="{'maincolor':product.quantity > 0 }">₹ {{product.selling_price}}</td>

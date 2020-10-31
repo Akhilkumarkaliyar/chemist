@@ -33,6 +33,15 @@ export class InvoiceComponent implements OnInit {
     quantity:any;
     id:any;
     billnos:any;
+    username:any;
+    dname:any;
+    plength:any;
+    loose:any;
+    invodate:any;
+    invoiceno:any;
+    authname:any;
+    address:any;
+    licenceno:any;
     constructor(private appservice: AppService,private router: Router, private route: ActivatedRoute, private toasterservice: ToasterService, private loaderservice: LoaderService, private cookieservice: CookieService ){}
     myDate = new Date();
     ngOnInit() {
@@ -40,6 +49,9 @@ export class InvoiceComponent implements OnInit {
             this.router.navigate(['/auth']);
         }
         this.loguser =JSON.parse(this.cookieservice.get("loginuserMerck")).id;
+        this.username =JSON.parse(this.cookieservice.get("loginuserMerck")).fname; 
+        this.address =JSON.parse(this.cookieservice.get("loginuserMerck")).address;
+        this.licenceno =JSON.parse(this.cookieservice.get("loginuserMerck")).licenceno;
         this.id = this.route.snapshot.paramMap.get('id');
         //console.log(this.loguser);
         this.getbillingdata();
@@ -65,10 +77,17 @@ export class InvoiceComponent implements OnInit {
                         this.myDate=new Date();
                         this.searchvalue="";
                         this.billnos =this.id;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
                         console.log(this.billnos);
                     }
                     else{
                         this.billnos =this.id;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
                     }
                 }
             );
@@ -93,17 +112,25 @@ export class InvoiceComponent implements OnInit {
     }
     getProduct() {
         this.searchproduct=document.getElementById("searchproduct");
-        this.appservice.productlist(this.loguser,this.searchproduct.value)
+        this.plength=this.searchproduct.value.length;
+        if(this.plength==3){
+            this.appservice.productlist(this.loguser,this.searchproduct.value)
             .subscribe(
                 data => {
                     if (data.status == '1') {
-                       this.productdata = data.data;
+                        this.productdata = data.data;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
                     }
                 }
             );
+        }
     }
     getproductname(){
         this.searchproduct=document.getElementById("searchproduct");
+        console.log(this.searchproduct);
         this.loaderservice.display(true);
         this.salestype=document.getElementById("salestype");
         this.appservice.productsearchss(this.searchproduct.value.trim(),this.loguser,this.salestype.value,this.id)
@@ -116,6 +143,9 @@ export class InvoiceComponent implements OnInit {
                     this.Tprice=data.total;
                     this.Gst=data.gst;
                     this.Amount=data.amount;
+                    this.dname=this.username;
+                    this.address=this.address;
+                    this.licenceno=this.licenceno;
                     this.myDate=new Date();
                     this.billnos =this.id; 
                     this.searchproduct.value = "";
@@ -125,6 +155,9 @@ export class InvoiceComponent implements OnInit {
                     this.Tprice=data.total;
                     this.Gst=data.gst;
                     this.Amount=data.amount;
+                    this.dname=this.username;
+                    this.address=this.address;
+                    this.licenceno=this.licenceno;
                     this.myDate=new Date();
                     this.billnos =this.id;
                     
@@ -143,6 +176,10 @@ export class InvoiceComponent implements OnInit {
                     this.Gst=data.gst;
                     this.Amount=data.amount;
                     this.billnos =this.id;
+                    this.dname=this.username;
+                    this.address=this.address;
+                    this.licenceno=this.licenceno;
+                    this.myDate=new Date();
                     //this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');   
                     //this.route.navigate(['/product']);   
                 }else if(data.status == '2'){ 
@@ -152,6 +189,10 @@ export class InvoiceComponent implements OnInit {
                     this.Gst=data.gst;
                     this.Amount=data.amount;
                     this.billnos =this.id;
+                    this.dname=this.username;
+                    this.address=this.address;
+                    this.licenceno=this.licenceno;
+                    this.myDate=new Date();
                     //this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');   
                    // this.route.navigate(['/product']);   
                 }
@@ -159,7 +200,7 @@ export class InvoiceComponent implements OnInit {
         );
     }
     deletebillingdata(id){
-        this.appservice.deletebilling(id)
+        this.appservice.deletebilling(id,this.loguser,this.id)
             .subscribe(
                 data => {
                     console.log(data);
@@ -170,6 +211,10 @@ export class InvoiceComponent implements OnInit {
                         this.Gst=data.gst;
                         this.Amount=data.amount;
                         this.billnos =this.id;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
                         //this.myDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
                         this.Totalprice =data.total
                         this.toasterservice.Success(data.message);  
@@ -177,10 +222,18 @@ export class InvoiceComponent implements OnInit {
                     }else if(data.status=='2'){
                         this.toasterservice.Error(data.message);
                         this.billnos =this.id;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
                         //this.router.navigate(['/billing']);  
                     }else{
                         this.toasterservice.Error(data.message);
                         this.billnos =this.id;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
                     }
                 }
             );
@@ -194,14 +247,17 @@ export class InvoiceComponent implements OnInit {
             console.log(this.ContactForm);
             this.loaderservice.display(true);
             this.salestype=document.getElementById("salestype");
-            this.appservice.billingproductlist( this.ContactForm.value,this.loguser,this.salestype.value)
+            this.invodate=document.getElementById("invoicedate");
+            this.invoiceno=document.getElementById("invoiceno");
+            this.authname=document.getElementById("authname");
+            this.appservice.billingproductlist( this.ContactForm.value,this.loguser,this.salestype.value,this.id,this.invodate.value,this.invoiceno.value,this.authname.value)
             .subscribe(
                 data=>{
                     console.log(data.lastinsertid);
                     if(data.status=='1')
                     {
                         this.toasterservice.Success(data.message);   
-                        this.router.navigate(['/viewinvoice',data.lastinsertid]);                
+                        this.router.navigate(['/viewinvoice',this.id]);                
                     }else if(data.status=='2'){
                         this.toasterservice.Error(data.message);
                         this.router.navigate(['/invoice']);  
@@ -215,7 +271,8 @@ export class InvoiceComponent implements OnInit {
     increquantity(id,product_id){
         this.quantity=document.getElementById("quantity_"+id);
         this.salestype=document.getElementById("salestype");
-        this.appservice.increquantity(id,product_id,this.quantity.value,this.salestype.value)
+        this.loose=document.getElementById("loose_"+id);
+        this.appservice.increquantity(id,product_id,this.quantity.value,this.salestype.value,this.loguser,this.id,this.loose.value)
             .subscribe(
                 data => {
                     console.log(data);
@@ -229,14 +286,40 @@ export class InvoiceComponent implements OnInit {
                         this.Totalprice =data.total
                         this.toasterservice.Success(data.message);
                         this.billnos =this.id; 
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
                         //this.router.navigate(['/billing']);                
                     }else if(data.status=='2'){
                         this.toasterservice.Error(data.message);
                         this.billnos =this.id;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
                         //this.router.navigate(['/billing']);  
                     }else{
                         this.toasterservice.Error(data.message);
                         this.billnos =this.id;
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.myDate=new Date();
+                    }
+                }
+            );
+    }
+    checkvalue(){
+        this.invoiceno=document.getElementById("invoiceno");
+        this.appservice.checkvalue(this.invoiceno.value,this.loguser)
+            .subscribe(
+                data => {
+                    if(data.status=='1')
+                    {
+                        this.toasterservice.Error(data.message);
+                    } else{
+                        this.toasterservice.Success(data.message);
                     }
                 }
             );

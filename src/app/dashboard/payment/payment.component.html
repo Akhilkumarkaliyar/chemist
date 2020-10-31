@@ -7,7 +7,7 @@
                     <div class="card-block">
                         <div class="row akhil">
                             <div class="col-lg-3">
-                                <div class="input-group">
+                                <div class="input-group" style="display:none;">
                                     <div class="input-group-prepend">
                                         <button class="btn btn-raised mr-1 btn-primary" (click)="goToaddvendorpayment(':id')">Add New Payment</button>
                                     </div>
@@ -56,32 +56,26 @@
                                 <tr>
                                     <th>Sr.No.</th>
                                     <th>Vendor Name</th>
-                                    <th>Bill No</th>
+                                    <!--<th>Bill No</th>-->
                                     <th>Amount</th>
-                                    <th>Date</th>
-                                    <th>Mode of Payment</th>
-                                    <th>Actions</th>
+                                    <th>Pay</th>
+                                    <th>Bill History</th>
+                                    <!--<th>Actions</th>-->
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let product of vendorpayment; index as i">
                                     <td>{{itemsPerPage *(currentPage-1)+i+1}}</td>
                                     <td>{{product.name}}</td>
-                                    <td>{{product.bill_id}}</td>
-                                    <td>₹ {{product.amount}}</td>
-                                    <td>{{product.payment_date | date: 'dd-MM-yyyy'}}</td>
-                                    <td>{{product.mode}}</td>
-                                    <td>
-                                        <!--<a class="btn btn-raised gradient-purple-bliss white shadow-z-1-hover" data-original-title="" title="" (click)="addbilling(product.id)">
-                                            <i class="ft-plus font-medium-3 mr-2"></i>Add Billing
-                                        </a>-->
+                                    <!--<td>{{product.bill_no}}</td>-->
+                                    <td>₹ {{product.totalamount}}</td>
+                                    <td><button class="btn-sm btn-lg btn-outline-primary" (click)="exit(exitproduct,product.totalamount,product.vendor_id)">Click To Pay</button></td>
+                                    <td><button class="btn-sm btn-lg btn-outline-primary" (click)="history(billhistory,product.vendor_id)">Bill History</button></td>
+                                    <!--<td>
                                         <a class="success p-0" data-original-title="" title="" (click)="goToCreatevendorpayment(product.id)">
                                             <i class="ft-edit-2 font-medium-3 mr-2"></i>Edit
                                         </a>
-                                        <!--<a class="danger p-0" data-original-title="" title="">
-                                            <i class="ft-x font-medium-3 mr-2"></i>
-                                        </a>-->
-                                    </td>
+                                    </td>-->
                                 </tr>
                             </tbody>
                         </table>
@@ -93,6 +87,96 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="card-block">
+            <ng-template #exitproduct let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">Pay Amount</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--<p>One fine body&hellip;</p>-->
+                    <div>
+                        <label for="male">Pending Amount : </label>
+                        <input type="text" id="pendingamount"  value="{{amount}}" readonly>
+                        <input type="hidden" id="vendorid"  value="{{vendorid}}">
+                    </div>
+                    <div>
+                        <label for="male">Pay Amount : </label>
+                        <input type="text" id="paidamount"  value="">
+                    </div>
+                </div>
+                <form [formGroup]="VendorpaymentForm"  novalidate>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <select  formControlName="bill_id" class="form-control" multiple>
+                                <option value="" selected="" disabled="">Select Bill</option>
+                                <option *ngFor="let bill of allbill"  value="{{bill.bill_no}}">{{bill.bill_no +' - '+ bill.amount+' - ' +bill.pending_amount}}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select  formControlName="mode" class="form-control">
+                                <option value="" selected="" disabled="">Payment Mode</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Cheque">Cheque</option>
+                                <option value="Online">Online</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+                    <button  type="submit"  class="btn btn-raised btn-raised btn-primary" (click)="createvendorpayment()"> <i class="fa fa-check-square-o"></i>Save</button>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="card-block">
+            <ng-template #billhistory let-c="close" let-d="dismiss">
+                <div class="modal-header">
+                    <h4 class="modal-title">Product List</h4>
+                    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!--<p>One fine body&hellip;</p>-->
+                    <table class="table table-responsive-md text-left">
+                        <thead>
+                            <tr>
+                                <th>Sr.No.</th>
+                                <th>Vendor Name</th>
+                                <th>Bill No</th>
+                                <th>Bill Date</th>
+                                <th>₹ Bill Amount</th>
+                                <th>₹ Paid Amount</th>
+                                <th>₹ Pending Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of allbill; index as i">
+                                <td>{{itemsPerPage *(currentPage-1)+i+1}}</td>
+                                <td>{{product.name}}</td>
+                                <td>{{product.bill_no}}</td>
+                                <td>{{product.bill_date  | date: 'dd-MM-yyyy'}}</td>
+                                <td>{{product.amount}}</td>
+                                <td>{{product.paid_amount}}</td>
+                                <td>{{product.pending_amount}}</td>
+                                <td>{{product.paid}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-raised" (click)="c('Close click')">Close</button>
+                </div>
+            </ng-template>
         </div>
     </div>
 </section>

@@ -23,7 +23,12 @@ export class ProductComponent implements OnInit {
     pno:any;
     itemsPerPage:any;
     currentPage:any;
-    totalrecord:any
+    totalrecord:any;
+    sortby:any;
+    categorydata:any;
+    gettype:any;
+    myDate:any;
+    expiredatesearch:any;
     constructor(private excelService:ExcelService,private appservice: AppService, private route: Router, private cookieservice: CookieService, private toasterservice: ToasterService, private loaderservice: LoaderService) { }
 
     ngOnInit() {
@@ -32,14 +37,16 @@ export class ProductComponent implements OnInit {
         }
         this.loguser =JSON.parse(this.cookieservice.get("loginuserMerck")).id;
         this.getProduct();
+        this.getcategory();
         this.ProductSearch = new FormGroup({
             search: new FormControl("", [Validators.required]),
         });
     }
 
     getProduct() {
-        
-        this.appservice.product(this.loguser,this.startpagevalue,10)
+        this.sortby=document.getElementById("getsortpage");
+        this.gettype=document.getElementById("gettype");
+        this.appservice.product(this.loguser,this.startpagevalue,10,this.sortby.value,this.gettype.value)
             .subscribe(
                 data => {
                     if (data.status == '1') {
@@ -47,14 +54,28 @@ export class ProductComponent implements OnInit {
                         this.totalRecords = data.record;
                         this.itemsPerPage =10;
                         this.currentPage =this.initialPageValue;
+                        this.myDate=new Date();
                     }
                 }
             );
     }
+    getcategory(){
+        //console.log(this.loguser);
+        this.appservice.category(0,100)
+        .subscribe(
+            data=>{
+                if(data.status=='1'){
+                    this.categorydata = data.data;
+                }
+            }
+        );
+    }
     getproductname(){
         //console.log(this.ProductSearch);
         this.loaderservice.display(true);
-        this.appservice.productsearch(this.ProductSearch.value,this.loguser,this.startpagevalue,10)
+        this.sortby=document.getElementById("getsortpage");
+        this.gettype=document.getElementById("gettype");
+        this.appservice.productsearch(this.ProductSearch.value,this.loguser,this.startpagevalue,10,this.sortby.value,this.gettype.value)
         .subscribe(
             data => {
                 //console.log(data);return;
@@ -99,7 +120,9 @@ export class ProductComponent implements OnInit {
     }
     handleChange(en){
         this.pno=en-1;
-        this.appservice.product(this.loguser,this.pno,10)
+        this.sortby=document.getElementById("getsortpage");
+        this.gettype=document.getElementById("gettype");
+        this.appservice.product(this.loguser,this.pno,10,this.sortby.value,this.gettype.value)
         .subscribe(
             data => {
                 if(data.status=='1'){
@@ -118,10 +141,89 @@ export class ProductComponent implements OnInit {
      }
      getrecord(){
         this.totalrecord=document.getElementById("getpage");
-        this.appservice.product(this.loguser,this.startpagevalue,this.totalrecord.value)
+        this.sortby=document.getElementById("getsortpage");
+        this.gettype=document.getElementById("gettype");
+        this.appservice.product(this.loguser,this.startpagevalue,this.totalrecord.value,this.sortby.value,this.gettype.value)
         .subscribe(
             data => {
                 if(data.status=='1'){
+                    this.productdata = data.data;
+                    if(this.totalrecord.value == 10){
+                        this.totalRecords = data.record;
+                    }else{
+                        this.totalRecords = '';
+                    }
+                    this.itemsPerPage =10;
+                    this.currentPage =this.initialPageValue;
+                }
+            }
+        );
+    }
+    getsortrecord(){
+        this.totalrecord=document.getElementById("getpage");
+        this.sortby=document.getElementById("getsortpage");
+        this.gettype=document.getElementById("gettype");
+        this.appservice.product(this.loguser,this.startpagevalue,this.totalrecord.value,this.sortby.value,this.gettype.value)
+        .subscribe(
+            data => {
+                if(data.status=='1'){
+                    this.productdata = data.data;
+                    if(this.totalrecord.value == 10){
+                        this.totalRecords = data.record;
+                    }else{
+                        this.totalRecords = '';
+                    }
+                    this.itemsPerPage =10;
+                    this.currentPage =this.initialPageValue;
+                }
+            }
+        );
+    }
+    gettypedata(){
+        this.totalrecord=document.getElementById("getpage");
+        this.sortby=document.getElementById("getsortpage");
+        this.gettype=document.getElementById("gettype");
+        this.appservice.product(this.loguser,this.startpagevalue,this.totalrecord.value,this.sortby.value,this.gettype.value)
+        .subscribe(
+            data => {
+                if(data.status=='1'){
+                    this.productdata = data.data;
+                    if(this.totalrecord.value == 10){
+                        this.totalRecords = data.record;
+                    }else{
+                        this.totalRecords = '';
+                    }
+                    this.itemsPerPage =10;
+                    this.currentPage =this.initialPageValue;
+                }else{
+                    this.productdata = data.data;
+                    if(this.totalrecord.value == 10){
+                        this.totalRecords = data.record;
+                    }else{
+                        this.totalRecords = '';
+                    }
+                    this.itemsPerPage =10;
+                    this.currentPage =this.initialPageValue;
+                }
+            }
+        );
+    }
+    getexpiredata(){
+        this.totalrecord=document.getElementById("getpage");
+        this.expiredatesearch=document.getElementById("searchexpire");
+        this.appservice.productsearchexpire(this.loguser,this.startpagevalue,this.totalrecord.value,this.expiredatesearch.value)
+        .subscribe(
+            data => {
+                if(data.status=='1'){
+                    this.productdata = data.data;
+                    if(this.totalrecord.value == 10){
+                        this.totalRecords = data.record;
+                    }else{
+                        this.totalRecords = '';
+                    }
+                    this.itemsPerPage =10;
+                    this.currentPage =this.initialPageValue;
+                }else{
                     this.productdata = data.data;
                     if(this.totalrecord.value == 10){
                         this.totalRecords = data.record;

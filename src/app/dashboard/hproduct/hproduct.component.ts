@@ -31,7 +31,7 @@ export class HproductComponent implements OnInit {
     }
 
     getProduct() {
-        this.appservice.product(this.loguser,this.startpagevalue,10)
+        this.appservice.product(this.loguser,this.startpagevalue,10,'name','sss')
             .subscribe(
                 data => {
                     if (data.status == '1') {
@@ -43,7 +43,7 @@ export class HproductComponent implements OnInit {
     getproductname(){
         //console.log(this.ProductSearch);
         this.loaderservice.display(true);
-        this.appservice.productsearch(this.ProductSearch.value,this.loguser,this.startpagevalue,10)
+        this.appservice.productsearch(this.ProductSearch.value,this.loguser,this.startpagevalue,10,'name','ww')
         .subscribe(
             data => {
                 //console.log(data);return;

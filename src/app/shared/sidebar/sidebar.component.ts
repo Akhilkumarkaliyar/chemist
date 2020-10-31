@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from './sidebar-routes.config';
 import { Front } from './sidebar-routes.config';
 import { Subuser } from './sidebar-routes.config';
@@ -9,9 +9,16 @@ import { TranslateService } from '@ngx-translate/core';
 import { CookieService } from 'ngx-cookie';
 declare var $: any;
 
+var fireRefreshEventOnWindow = function () {
+    var evt = document.createEvent("HTMLEvents");
+    evt.initEvent('resize', true, false);
+    window.dispatchEvent(evt);
+};
+
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
+    styles: ['@media print{.doNotPrint{display:none !important;} }'],
 })
 
 export class SidebarComponent implements OnInit {
@@ -21,13 +28,22 @@ export class SidebarComponent implements OnInit {
     inurl :any;
     loguser:any;
     usertype:any;
+    printurl:any;
     constructor(private router: Router,private appservice: AppService,
-        private route: ActivatedRoute, public translate: TranslateService, private cookieservice: CookieService) {
+        private route: ActivatedRoute, public translate: TranslateService, private cookieservice: CookieService, private elementRef: ElementRef) {
         
     }
 
     ngOnInit() {
         $.getScript('./assets/js/app-sidebar.js');
+        this.printurl = window.location.href;
+        if(this.printurl.includes("viewinvoice")){
+            console.log('true');
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent('resize', true, false);
+            window.dispatchEvent(evt);
+            console.log(evt);
+        }
         this.cokser =JSON.parse(this.cookieservice.get("loginuserMerck"));
         this.loguser =JSON.parse(this.cookieservice.get("loginuserMerck")).id;
         this.usertype =JSON.parse(this.cookieservice.get("loginuserMerck")).usertype;
@@ -65,5 +81,11 @@ export class SidebarComponent implements OnInit {
         }else{
              this.router.navigate([route]); 
         }
+    }
+
+    
+    onClick(event) {
+        //initialize window resizer event on sidebar toggle click event
+        setTimeout(() => { fireRefreshEventOnWindow() }, 300);
     }
 }

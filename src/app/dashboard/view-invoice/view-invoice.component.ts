@@ -17,6 +17,16 @@ export class ViewinvoiceComponent implements OnInit {
     Amount:any;
     loguser:any;
     id:any;
+    address:any;
+    add:any;
+    username:any;
+    mobile:any;
+    billnos:any;
+    billinfo:any;
+    city:any;
+    dname:any;
+    licenceno:any;
+    ci:any;
     constructor(private appservice: AppService,private router: Router, private route: ActivatedRoute, private toasterservice: ToasterService, private loaderservice: LoaderService, private cookieservice: CookieService ){}
     myDate = new Date();
     ngOnInit() {
@@ -25,6 +35,11 @@ export class ViewinvoiceComponent implements OnInit {
         }
         this.id = this.route.snapshot.paramMap.get('id');
         this.loguser =JSON.parse(this.cookieservice.get("loginuserMerck")).id;
+        this.username =JSON.parse(this.cookieservice.get("loginuserMerck")).fname;
+        this.address =JSON.parse(this.cookieservice.get("loginuserMerck")).address;
+        this.licenceno =JSON.parse(this.cookieservice.get("loginuserMerck")).licenceno;
+        this.city =JSON.parse(this.cookieservice.get("loginuserMerck")).city;
+        this.mobile =JSON.parse(this.cookieservice.get("loginuserMerck")).mobile;
         this.getbillingdata();
     }
 
@@ -38,13 +53,27 @@ export class ViewinvoiceComponent implements OnInit {
                         this.Tprice=data.total;
                         this.Gst=data.gst;
                         this.Amount=data.amount;
+                        this.billinfo=data.billinfo;
+                        this.add=this.address;
+                        this.billnos =this.id;
                         this.myDate=new Date();
+                        this.dname=this.username;
+                        this.address=this.address;
+                        this.licenceno=this.licenceno;
+                        this.ci =this.city;
                     }
                 }
             );
     }
     printPage() {
-        window.print();
+        //window.print();
+        var prtContent = document.getElementById("vmmjhdk");
+        var WinPrint = window.open('', '', 'left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0');
+        WinPrint.document.write(prtContent.innerHTML);
+        WinPrint.document.close();
+        WinPrint.focus();
+        WinPrint.print();
+        WinPrint.close();
     }
 
 }

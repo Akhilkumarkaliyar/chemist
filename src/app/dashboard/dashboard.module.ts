@@ -67,6 +67,7 @@ import {CreateVendorBillComponent} from './create-vendor-bill/create-vendor-bill
 import {CreateVendorPaymentComponent} from './create-vendor-payment/create-vendor-payment.component';
 import { CustomersalesComponent } from './customersales/customersales.component';
 import { CustomerdeatilComponent } from './customerdeatil/customerdeatil.component';
+import { DupviewinvoiceComponent } from './dup-view-invoice/dup-view-invoice.component';
 //import { BarecodeScannerLivestreamModule } from 'ngx-barcode-scanner';
 
 @NgModule({
@@ -140,7 +141,8 @@ import { CustomerdeatilComponent } from './customerdeatil/customerdeatil.compone
         CreateVendorBillComponent,
         CreateVendorPaymentComponent,
         CustomersalesComponent,
-        CustomerdeatilComponent
+        CustomerdeatilComponent,
+        DupviewinvoiceComponent
     ],
     providers: [],
 })

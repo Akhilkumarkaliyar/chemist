@@ -74,7 +74,7 @@ export class AutoorderComponent implements OnInit {
     }
     getproductname(){
         this.loaderservice.display(true);
-        this.appservice.productsearch(this.ProductSearch.value,this.loguser,this.startpagevalue,10)
+        this.appservice.productsearch(this.ProductSearch.value,this.loguser,this.startpagevalue,10,'name','ss')
         .subscribe(
             data => {
                 if (data.status == '1') {

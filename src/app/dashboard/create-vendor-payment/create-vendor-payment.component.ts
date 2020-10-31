@@ -97,7 +97,7 @@ export class CreateVendorPaymentComponent implements OnInit{
               }
           );
     }
-    createvendorpayment(){
+    /*createvendorpayment(){
         if(this.VendorpaymentForm.invalid){
             this.toasterservice.Error("Please enter the required filed");
             return;
@@ -122,7 +122,7 @@ export class CreateVendorPaymentComponent implements OnInit{
             );
             //console.log(this.UserForm.value);
         }
-    }
+    }*/
     editvendorpayment(){
         if(this.VendorpaymentForm.invalid){
             this.toasterservice.Error("Please enter the required filed");

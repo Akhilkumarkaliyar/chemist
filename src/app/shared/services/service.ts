@@ -7,15 +7,38 @@ import { Observable } from 'rxjs';
 })
 
 export class AppService {
-    baseurl = "http://localhost:8085/";
-    //baseurl = "http://ec2-13-233-172-180.ap-south-1.compute.amazonaws.com:8086/";
+    //baseurl = "http://localhost:8085/";
+    baseurl = "http://ec2-13-233-172-180.ap-south-1.compute.amazonaws.com:8086/";
 
     constructor(private http: HttpClient) { }
-
     users(addedby): Observable<any> {
         //console.log(id);return;
         return this.http.post<any>(
             this.baseurl + "alldata",
+            { addedby: addedby},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    checkvalue(invoiceno,addedby): Observable<any> {
+        //console.log(id);return;
+        return this.http.post<any>(
+            this.baseurl + "checkvalue",
+            { invoiceno:invoiceno,addedby: addedby},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    emptyvendorbill(addedby): Observable<any> {
+        //console.log(id);return;
+        return this.http.post<any>(
+            this.baseurl + "emptyvendorbill",
             { addedby: addedby},
             {
                 headers: new HttpHeaders({
@@ -36,11 +59,34 @@ export class AppService {
             }
         );
     }
+    deleteproduct(addedby,productid,billid): Observable<any> {
+        //console.log(id);return;
+        return this.http.post<any>(
+            this.baseurl + "deleteproduct",
+            { addedby: addedby,productid:productid,billid:billid},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
     wholesaler(addedby,pagevalue): Observable<any> {
         console.log(pagevalue);
         return this.http.post<any>(
             this.baseurl + "wholesaler",
             { addedby: addedby,pagevalue:pagevalue},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    allvendorbill(addedby,vendorid): Observable<any> {
+        return this.http.post<any>(
+            this.baseurl + "allvendorbill",
+            {addedby:addedby,vendorid:vendorid},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -84,12 +130,24 @@ export class AppService {
     }
     country():Observable<any>{
         return this.http.get<any>(this.baseurl + "country");
-    }
-    product(addedby,pagevalue,totalrecord): Observable<any> {
+    } 
+    product(addedby,pagevalue,totalrecord,sortby,gettype): Observable<any> {
         //console.log(id);return;
         return this.http.post<any>(
             this.baseurl + "product",
-            { addedby: addedby,pagevalue:pagevalue,totalrecord:totalrecord},
+            { addedby: addedby,pagevalue:pagevalue,totalrecord:totalrecord,sortby:sortby,gettype:gettype},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    productsearchexpire(addedby,pagevalue,totalrecord,expiredatesearch): Observable<any> {
+        //console.log(id);return;
+        return this.http.post<any>(
+            this.baseurl + "productsearchexpire",
+            { addedby: addedby,pagevalue:pagevalue,totalrecord:totalrecord,expiredatesearch:expiredatesearch},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -181,13 +239,25 @@ export class AppService {
             }
         );
     }
+    nonpaidvendorbill(addedby,vendorid): Observable<any> {
+        //console.log(vendorid);return;
+        return this.http.post<any>(
+            this.baseurl + "nonpaidvendorbill",
+            {addedby:addedby,vendorid:vendorid},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
     comingproductdata():Observable<any>{
         return this.http.get<any>(this.baseurl + "comingproduct");
     }
-    stockproductdata(addedby,pagevalue,total): Observable<any> {
+    stockproductdata(pagevalue,total,addedby,sortby): Observable<any> {
         return this.http.post<any>(
             this.baseurl + "stockproductdata",
-            {pagevalue:pagevalue,totalrecord:total,addedby:addedby},
+            {pagevalue:pagevalue,totalrecord:total,addedby:addedby,sortby:sortby},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -293,28 +363,39 @@ export class AppService {
     wholesailer():Observable<any>{
         return this.http.get<any>(this.baseurl + "wholesailer");
     }
-    adduser(id): Observable<any> {
-        //console.log(id);return;
+    adduser(id,file): Observable<any> {
+        const uploaddata = new FormData();
+        uploaddata.append("image", file);
+        uploaddata.append("lname", id.fname);
+        uploaddata.append("email", id.email);
+        uploaddata.append("country", id.country);
+        uploaddata.append("address", id.address);
+        uploaddata.append("city", id.city);
+        uploaddata.append("mobile", id.mobile);
+        uploaddata.append("licenceno", id.licenceno);
         return this.http.post<any>(
             this.baseurl + "register",
-            { fname: id.fname,city: id.city,country : id.country,lname:id.lname,hospital:id.hospital,email:id.email,mobile:id.mobile},
-            {
-                headers: new HttpHeaders({
-                    "Content-Type": "application/json"
-                })
-            }
+            uploaddata,
         );
     }
-    edituser(formdata,id): Observable<any> {
-        //console.log(id);return;
+    edituser(formdata,id,file): Observable<any> {
+        //console.log(formdata);return;
+        if(file == undefined){
+            file ='';
+        }
+        const uploaddata = new FormData();
+        uploaddata.append("image", file);
+        uploaddata.append("fname", formdata.fname);
+        uploaddata.append("mobile", formdata.mobile);
+        uploaddata.append("country", formdata.country);
+        uploaddata.append("licenceno", formdata.licenceno);
+        uploaddata.append("address", formdata.address);
+        uploaddata.append("email", formdata.email);
+        uploaddata.append("city", formdata.city);
+        uploaddata.append("id", id);
         return this.http.post<any>(
             this.baseurl + "edituser",
-            { fname: formdata.fname,city: formdata.city,country : formdata.country,lname:formdata.lname,hospital:formdata.hospital,email:formdata.email,mobile:formdata.mobile},
-            {
-                headers: new HttpHeaders({
-                    "Content-Type": "application/json"
-                })
-            }
+            uploaddata
         );
     }
     resetpassword(formdata,id): Observable<any> {
@@ -363,7 +444,7 @@ export class AppService {
             }
         );
     }
-    addproduct(id, file,loguser,expire_date,gst): Observable<any> {
+    addproduct(id, file,loguser,expire_date): Observable<any> {
         const uploaddata = new FormData();
         uploaddata.append("image", file);
         uploaddata.append("cat_id", id.cat_id);
@@ -371,13 +452,14 @@ export class AppService {
         uploaddata.append("name", id.name);
         uploaddata.append("chemical_name", id.chemical_name);
         uploaddata.append("mrp", id.mrp);
-        uploaddata.append("selling_price", id.selling_price);
+        //uploaddata.append("selling_price", id.selling_price);
         //uploaddata.append("available_price", id.available_price);
-        uploaddata.append("gst", gst);
+        uploaddata.append("gst", id.gst);
         uploaddata.append("hsn_code", id.hsn_code);
         uploaddata.append("barcode", id.barcode);
         uploaddata.append("company_name", id.company_name);
         uploaddata.append("quantity", id.quantity);
+        uploaddata.append("loose", id.loose);
         uploaddata.append("rack_no", id.rack_no);
         uploaddata.append("batch_no", id.batch_no);
         uploaddata.append("is_prescription", id.is_prescription);
@@ -391,7 +473,7 @@ export class AppService {
             uploaddata,
         );
     }
-    editproduct(formdata,id,file,loguser,expiredate,gst): Observable<any> {
+    editproduct(formdata,id,file,loguser,expiredate): Observable<any> {
         //console.log(formdata);return;
         if(file == undefined){
             file ='';
@@ -403,12 +485,13 @@ export class AppService {
         uploaddata.append("name", formdata.name);
         uploaddata.append("chemical_name", formdata.chemical_name);
         uploaddata.append("mrp", formdata.mrp);
-        uploaddata.append("selling_price", formdata.selling_price);
+        //uploaddata.append("selling_price", formdata.selling_price);
         uploaddata.append("hsn_code", formdata.hsn_code);
-        uploaddata.append("gst", gst);
+        uploaddata.append("gst", formdata.gst);
         //uploaddata.append("available_price", formdata.available_price);
         uploaddata.append("company_name", formdata.company_name);
         uploaddata.append("quantity", formdata.quantity);
+        uploaddata.append("loose", formdata.loose);
         uploaddata.append("rack_no", formdata.rack_no);
         uploaddata.append("is_prescription", formdata.is_prescription);
         uploaddata.append("batch_no", formdata.batch_no);
@@ -470,11 +553,11 @@ export class AppService {
             }
         );
     }
-    productsearch(formdata,addedby,pagevalue,totalrecord): Observable<any> {
+    productsearch(formdata,addedby,pagevalue,totalrecord,sortby,gettype): Observable<any> {
         //console.log(formdata.search);
         return this.http.post<any>(
             this.baseurl + "productsearch",
-            { value: formdata.search,addedby:addedby,pagevalue:pagevalue,totalrecord:totalrecord},
+            { value: formdata.search,addedby:addedby,pagevalue:pagevalue,totalrecord:totalrecord,sortby:sortby,gettype:gettype},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -487,6 +570,65 @@ export class AppService {
         return this.http.post<any>(
             this.baseurl + "productsearchss",
             { value: formdata,addedby:addedby,salestype:salestype,billid:billid},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    addvendorproduct(addedby,productsearch): Observable<any> {
+        //console.log(formdata.search);
+        return this.http.post<any>(
+            this.baseurl + "addvendorproduct",
+            { addedby:addedby,productsearch:productsearch},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    addvendorproducts(addedby,productsearch,billid): Observable<any> {
+        //console.log(formdata.search);
+        return this.http.post<any>(
+            this.baseurl + "addvendorproductlist",
+            { addedby:addedby,productsearch:productsearch,billid:billid},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    getbillproduct(addedby,billid): Observable<any> {
+        return this.http.post<any>(
+            this.baseurl + "getbillproduct",
+            { addedby:addedby,billid:billid},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    createvendorproduct(addedby,productid,purchaseprice,mrp,quantity,expiredate,batchno): Observable<any> {
+        //console.log(formdata.search);
+        return this.http.post<any>(
+            this.baseurl + "createvendorproduct",
+            { addedby:addedby,productid:productid,purchaseprice:purchaseprice,mrp:mrp,quantity:quantity,expiredate:expiredate,batchno:batchno},
+            {
+                headers: new HttpHeaders({
+                    "Content-Type": "application/json"
+                })
+            }
+        );
+    }
+    updatebillproduct(addedby,productid,billid,mrp,quantity,expiredate,batchno,purchaseprice): Observable<any> {
+        //console.log(formdata.search);
+        return this.http.post<any>(
+            this.baseurl + "updatebillproduct",
+            { addedby:addedby,productid:productid,billid:billid,mrp:mrp,quantity:quantity,expiredate:expiredate,batchno:batchno,purchaseprice:purchaseprice},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -527,10 +669,10 @@ export class AppService {
             }
         );
     }
-    billingproductlist(id,loguser,salestype): Observable<any> {
+    billingproductlist(id,loguser,salestype,billno,invodate,invoiceno,authname): Observable<any> {
         return this.http.post<any>(
             this.baseurl + "billingproductlist",
-            { name : id.name,email : id.email,mobile : id.mobile, address : id.address,addedby :loguser,salestype:salestype},
+            { name : id.name,email : id.email,mobile : id.mobile, address : id.address,addedby :loguser,salestype:salestype,billno:billno,invodate:invodate,invoiceno:invoiceno,authname:authname},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -1161,10 +1303,10 @@ export class AppService {
             }
         );
     }
-    deletebilling(id): Observable<any> {
+    deletebilling(id,addedby,billid): Observable<any> {
         return this.http.post<any>(
             this.baseurl + "deletebilling",
-            { id:id},
+            { id:id,addedby:addedby,billid:billid},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -1205,10 +1347,10 @@ export class AppService {
             }
         );
     } 
-    increquantity(id,product_id,quantity,salestype): Observable<any> {
+    increquantity(id,product_id,quantity,salestype,addedby,userid,loose): Observable<any> {
         return this.http.post<any>(
             this.baseurl + "increquantity",
-            { id:id,product_id:product_id,quantity:quantity,salestype:salestype},
+            { id:id,product_id:product_id,quantity:quantity,salestype:salestype,addedby:addedby,userid:userid,loose:loose},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -1330,10 +1472,10 @@ export class AppService {
             }
         );
     }
-    addvendorbill(id,addedby,billdate): Observable<any> {
+    addvendorbill(id,amount,addedby): Observable<any> {
         return this.http.post<any>(
             this.baseurl + "createvendorbill",
-            { vendor_id : id.vendor_id,bill_no : id.bill_no,bill_date : billdate, amount : id.amount,addedby :addedby},
+            { vendor_id : id.vendor_id,bill_no : id.bill_no, amount : amount,addedby :addedby},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"
@@ -1387,11 +1529,11 @@ export class AppService {
             }
         );
     }
-    addvendorpayment(id,addedby,payment_date): Observable<any> {
+    addvendorpayment(id,addedby,paidamount,pendingamount,vendor_id): Observable<any> {
         console.log(id);
         return this.http.post<any>(
             this.baseurl + "createvendorpayment",
-            { vendor_id : id.vendor_id,bill_id : id.bill_id,payment_date : payment_date, amount : id.amount,mode :id.mode,addedby :addedby},
+            { bill_id : id.bill_id, mode :id.mode,addedby :addedby,paidamount:paidamount,pendingamount:pendingamount,vendor_id:vendor_id},
             {
                 headers: new HttpHeaders({
                     "Content-Type": "application/json"

@@ -17,6 +17,7 @@ export class NavbarComponent implements AfterViewChecked {
     toggleClass = 'ft-maximize';
     placement = 'bottom-right'
     public isCollapsed = true;
+    loguser:any;
 
     constructor(public translate: TranslateService ,private appservice: AppService,private router: Router, private route: ActivatedRoute, private toasterservice: ToasterService, private loaderservice: LoaderService, private cookieservice: CookieService) {
         const browserLang: string = translate.getBrowserLang();
@@ -64,5 +65,10 @@ export class NavbarComponent implements AfterViewChecked {
                     }
                 }
             );
+    }
+    gotoprofile(){
+        this.loguser =JSON.parse(this.cookieservice.get("loginuserMerck")).id;
+        console.log(this.loguser);
+        this.router.navigate(['/create-user', this.loguser]);
     }
 }
